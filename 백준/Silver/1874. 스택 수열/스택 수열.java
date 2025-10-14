@@ -11,28 +11,25 @@ public class Main {
 		Stack<Integer> stack = new Stack<>();
 
 		int n = Integer.parseInt(br.readLine());
-		int[] arr = new int[n];
+		int cur = 1;
 
 		for(int i=0; i<n; i++){
-			arr[i] = Integer.parseInt(br.readLine());
-		}
+			int num = Integer.parseInt(br.readLine());
 
-		int j=0;
+			while(cur <= num){
+				stack.push(cur++);
+				sb.append("+\n");
+			}
 
-		for(int i=1; i<=n; i++){
-			stack.push(i);
-			sb.append("+").append("\n");
-
-			while(!stack.isEmpty() && stack.peek() == arr[j]){
+			if(!stack.isEmpty() && stack.peek() == num){
 				stack.pop();
-				j++;
-				sb.append("-").append("\n");
+				sb.append("-\n");
+			} else{
+				System.out.println("NO");
+				return;
 			}
 		}
 
-		if(j == n)
-			System.out.println(sb);
-		else
-			System.out.println("NO");
+		System.out.println(sb);
 	}
 }
