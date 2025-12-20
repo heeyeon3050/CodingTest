@@ -1,5 +1,6 @@
-import java.io.*;
-import java.util.*;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 
 public class Main {
 	public static void main(String[] args) throws IOException {
@@ -7,25 +8,23 @@ public class Main {
 
 		String str = br.readLine();
 
-		Stack<Character> stack = new Stack<>();
-
-		int sum = 0;
-		char prev = '(';
 		int length = str.length();
+		int size = 0;
+		int n = 0;
 		for(int i=0; i<length; i++){
-			char x = str.charAt(i);
-			if(x == '(')
-				stack.push(x);
-			else{
-				stack.pop();
-				if(prev != x)
-					sum += stack.size();
-				else
-					sum++;
+			if(str.charAt(i) == '('){
+				if(i<length-1 && str.charAt(i+1) == ')'){
+					n += size;
+					i++;
+				} else{
+					size++;
+				}
+			} else{
+				n++;
+				size--;
 			}
-			prev = x;
 		}
 
-		System.out.println(sum);
+		System.out.println(n);
 	}
 }
