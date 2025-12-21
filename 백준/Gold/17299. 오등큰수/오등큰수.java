@@ -5,37 +5,37 @@ import java.util.Stack;
 import java.util.StringTokenizer;
 
 public class Main {
-	public static void main(String[] args) throws IOException{
+	public static void main(String[] args) throws IOException {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-		StringTokenizer st;
 		StringBuilder sb = new StringBuilder();
-		Stack<Integer> stack = new Stack<>();
-		
-		int N = Integer.parseInt(br.readLine());
-		int arr[] = new int[N];
-		int cnt[] = new int[1000001];
-		int ans[] = new int[N];
-		
+		StringTokenizer st;
+
+		int n = Integer.parseInt(br.readLine());
+		int arr[] = new int[n];
+		int f[] = new int[1000001];
+		int ngf[] = new int[n];
+
 		st = new StringTokenizer(br.readLine());
-		for(int i=0; i<N; i++) {
+		for (int i = 0; i < n; i++) {
 			arr[i] = Integer.parseInt(st.nextToken());
-			cnt[arr[i]]++;
+			f[arr[i]]++;
 		}
-		
-		for(int i=0; i<N; i++) {
-			while(!stack.isEmpty() && cnt[arr[stack.peek()]] < cnt[arr[i]]) {
-				ans[stack.pop()] = arr[i];
+
+		Stack<Integer> stack = new Stack<>();
+		for (int i = 0; i < n; i++) {
+			while (!stack.isEmpty() && f[arr[i]] > f[arr[stack.peek()]]) {
+				ngf[stack.pop()] = arr[i];
 			}
 			stack.push(i);
 		}
-		
-		while(!stack.isEmpty())
-			ans[stack.pop()] = -1;
-		
-		for(int i=0; i<N; i++) {
-			sb.append(ans[i]).append(' ');
+
+		while (!stack.isEmpty())
+			ngf[stack.pop()] = -1;
+
+		for (int i = 0; i < n; i++) {
+			sb.append(ngf[i] + " ");
 		}
-		
+
 		System.out.println(sb);
 	}
 }
