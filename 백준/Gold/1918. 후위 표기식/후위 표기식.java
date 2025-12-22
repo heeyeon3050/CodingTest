@@ -1,5 +1,7 @@
-import java.io.*;
-import java.util.*;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.Stack;
 
 public class Main {
 	public static void main(String[] args) throws IOException {
@@ -9,39 +11,34 @@ public class Main {
 		String str = br.readLine();
 
 		Stack<Character> stack = new Stack<>();
-
-		int length = str.length();
-		for(int i=0; i<length; i++){
-			char x = str.charAt(i);
-			if(x >= 'A' && x<= 'Z')
-				sb.append(x);
-			else if(x == '(')
-				stack.push(x);
-			else if(x == ')'){
-				while(!stack.isEmpty() && stack.peek() != '(')
+		for (int i = 0; i < str.length(); i++) {
+			if (str.charAt(i) >= 'A' && str.charAt(i) <= 'Z') {
+				sb.append(str.charAt(i));
+			} else if (str.charAt(i) == '(') {
+				stack.push(str.charAt(i));
+			} else if (str.charAt(i) == ')') {
+				while (!stack.isEmpty() && stack.peek() != '(') {
 					sb.append(stack.pop());
+				}
 				stack.pop();
 			} else {
-				while(!stack.isEmpty() && priority(stack.peek()) >= priority(x)){
-						sb.append(stack.pop());
+				while (!stack.isEmpty() && priority(stack.peek()) >= priority(str.charAt(i)) && stack.peek() != '(') {
+					sb.append(stack.pop());
 				}
-				stack.push(x);
+				stack.push(str.charAt(i));
 			}
 		}
 
-		while(!stack.isEmpty()){
+		while (!stack.isEmpty()) {
 			sb.append(stack.pop());
 		}
 
 		System.out.println(sb);
 	}
 
-	public static int priority(char x){
-		if(x == '(' || x == ')')
-			return 0;
-		if(x == '+' || x == '-')
-			return 1;
-		else
-			return 2;
+	static int priority(char c) {
+		if (c == '+' || c == '-') return 1;
+		if (c == '*' || c == '/') return 2;
+		return 0;
 	}
 }
